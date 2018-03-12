@@ -16,19 +16,18 @@
 
 #include <Arduino.h>
 
-int potPin = 0;     // Store the potentiometer pin.
-int LEDPin = 13;    // Store the LED pin.
-int delayValue = 0; // Store the dealy value to be used.
+int potPin = 0;   // Declare potPin to be analog pin A0.
+int LEDPin = 11;  // Declare LEDPin to be Digital 11 (PWM).
+int readValue;    // Use this variable to read Potentiometer.
+int writeValue;   // Use this variable for writing to LED.
 
 void setup() {
-	pinMode(potPin, INPUT); // Set the potentiometer pin as INPUT.
-	pinMode(LEDPin, OUTPUT); // Set the LED pin as OUTPUT.
+    pinMode(potPin, INPUT);   // Set potPin to be an Input.
+    pinMode(LEDPin, OUTPUT);  // Set LEDPin to be an Output.
 }
 
 void loop() {
-	delayValue = analogRead(potPin); // Change delay to measured value.
-	digitalWrite(LEDPin, HIGH);      // Turn the LED on.
-	delay(delayValue);               // Stop the program for some time.
-	digitalWrite(LEDPin, LOW);       // turn the LED off.
-	delay(delayValue);               // Stop the program for some time.
+    readValue = analogRead(potPin);          // Read the voltage on the Potentiometer. 
+    writeValue = (255.0/1023.0) * readValue; // Calculate writeValue for LED.
+    analogWrite(LEDPin, writeValue);         // Write to the LED.
 }
